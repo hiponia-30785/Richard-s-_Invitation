@@ -1,0 +1,2009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Richard's 5th Birthday</title>
+
+    <style>
+
+        /* ==========================================
+           GENERAL
+        ========================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Trebuchet MS", Arial, sans-serif;
+            overflow-x: hidden;
+            background: #e9faff;
+            color: #398eb2;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+
+        /* ==========================================
+           LOADING SCREEN
+        ========================================== */
+
+        #loadingScreen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            background: linear-gradient(
+                180deg,
+                #72d1f4,
+                #dff8ff
+            );
+
+            transition: opacity 0.8s ease;
+        }
+
+        .loading-content {
+            animation: floating 2s ease-in-out infinite;
+        }
+
+        .loading-cloud {
+            font-size: 90px;
+        }
+
+        .loading-title {
+            color: white;
+            font-size: 42px;
+            font-weight: bold;
+
+            text-shadow:
+                0 5px #4aa6cf;
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .loading-bar {
+            width: 280px;
+            height: 16px;
+
+            background: white;
+            border-radius: 50px;
+
+            margin: 20px auto;
+            padding: 3px;
+        }
+
+        .loading-progress {
+            width: 0%;
+            height: 100%;
+
+            background: #55bde8;
+
+            border-radius: 50px;
+
+            animation: loading 2.2s forwards;
+        }
+
+
+        /* ==========================================
+           OPENING SCREEN
+        ========================================== */
+
+        #openingScreen {
+            position: fixed;
+            inset: 0;
+
+            z-index: 9000;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #e9faff,
+                    #91def8
+                );
+
+            transition:
+                opacity 0.8s ease,
+                transform 0.8s ease;
+        }
+
+        #openingScreen.hide {
+            opacity: 0;
+            transform: scale(1.1);
+            pointer-events: none;
+        }
+
+        .opening-content {
+            cursor: pointer;
+            animation: floating 2.5s ease-in-out infinite;
+        }
+
+        .envelope {
+            font-size: 130px;
+            filter:
+                drop-shadow(
+                    0 15px 15px
+                    rgba(40, 127, 169, 0.25)
+                );
+        }
+
+        .opening-title {
+            color: white;
+
+            font-size: 65px;
+            font-weight: bold;
+
+            text-shadow:
+                0 6px #3f9ec8;
+        }
+
+        .opening-subtitle {
+            color: white;
+            font-size: 20px;
+            margin: 10px 0 25px;
+        }
+
+        .open-button {
+            display: inline-block;
+
+            padding: 13px 28px;
+
+            background: white;
+            color: #45a0c8;
+
+            border-radius: 50px;
+
+            font-weight: bold;
+            font-size: 18px;
+
+            box-shadow:
+                0 6px #51b1d7;
+
+            animation: pulse 1.4s infinite;
+        }
+
+
+        /* ==========================================
+           MAIN WEBSITE
+        ========================================== */
+
+        #website {
+            opacity: 0;
+
+            transition:
+                opacity 1s ease;
+        }
+
+        #website.show {
+            opacity: 1;
+        }
+
+
+        /* ==========================================
+           HERO SECTION
+        ========================================== */
+
+        .hero {
+            position: relative;
+
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 60px 20px;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #72d0f3 0%,
+                    #bdeafb 60%,
+                    #e9faff 100%
+                );
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 20;
+
+            width: 100%;
+            max-width: 1000px;
+        }
+
+
+        /* ==========================================
+           MOVING CLOUDS
+        ========================================== */
+
+        .cloud {
+            position: absolute;
+
+            font-size: 100px;
+
+            opacity: 0.8;
+
+            z-index: 2;
+
+            pointer-events: none;
+        }
+
+        .cloud-one {
+            left: -150px;
+            top: 8%;
+
+            animation:
+                moveCloudRight
+                20s linear infinite;
+        }
+
+        .cloud-two {
+            right: -150px;
+            top: 25%;
+
+            animation:
+                moveCloudLeft
+                24s linear infinite;
+        }
+
+        .cloud-three {
+            left: -150px;
+            bottom: 10%;
+
+            animation:
+                moveCloudRight
+                27s linear infinite;
+        }
+
+        .cloud-four {
+            right: -150px;
+            bottom: 15%;
+
+            animation:
+                moveCloudLeft
+                22s linear infinite;
+        }
+
+
+        /* ==========================================
+           STARS
+        ========================================== */
+
+        .star {
+            position: absolute;
+
+            color: white;
+
+            font-size: 28px;
+
+            z-index: 3;
+
+            animation:
+                twinkle
+                2s ease-in-out infinite;
+        }
+
+        .star-one {
+            left: 10%;
+            top: 20%;
+        }
+
+        .star-two {
+            right: 12%;
+            top: 18%;
+
+            animation-delay: 0.5s;
+        }
+
+        .star-three {
+            left: 18%;
+            bottom: 20%;
+
+            animation-delay: 1s;
+        }
+
+        .star-four {
+            right: 18%;
+            bottom: 25%;
+
+            animation-delay: 1.5s;
+        }
+
+        .star-five {
+            left: 30%;
+            top: 12%;
+
+            animation-delay: 0.8s;
+        }
+
+
+        /* ==========================================
+           RICHARD PHOTO
+        ========================================== */
+
+        .richard-photo {
+            width: 300px;
+            height: 300px;
+
+            margin: 0 auto 25px;
+
+            padding: 7px;
+
+            border-radius: 50%;
+
+            background: white;
+
+            box-shadow:
+                0 15px 35px
+                rgba(40, 127, 169, 0.25);
+
+            animation:
+                photoFloat
+                3s ease-in-out infinite;
+
+            overflow: hidden;
+        }
+
+        .richard-photo img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+
+            display: block;
+        }
+
+
+        /* ==========================================
+           RICHARD'S @5
+        ========================================== */
+
+        .birthday-title {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 18px;
+
+            flex-wrap: wrap;
+        }
+
+        .richard-name {
+            color: white;
+
+            font-size:
+                clamp(55px, 9vw, 105px);
+
+            font-weight: bold;
+
+            line-height: 0.9;
+
+            text-shadow:
+                0 7px #47a6d0,
+                0 13px 20px
+                rgba(40, 127, 169, 0.2);
+        }
+
+        /*
+            IMPORTANT:
+
+            @ AND 5 ARE CONNECTED
+        */
+
+        .birthday-age {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            color: white;
+
+            font-size:
+                clamp(65px, 9vw, 100px);
+
+            font-weight: bold;
+
+            text-shadow:
+                0 7px #47a6d0;
+        }
+
+        .at-symbol {
+            margin-right: 4px;
+        }
+
+        .number-five {
+            width: 95px;
+            height: 95px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: #ffe27d;
+
+            color: #55a4c3;
+
+            border: 7px solid white;
+
+            border-radius: 50%;
+
+            box-shadow:
+                0 8px #dbc35c;
+
+            transform: rotate(-6deg);
+
+            animation:
+                numberBounce
+                2s ease-in-out infinite;
+        }
+
+
+        /* ==========================================
+           DATE
+        ========================================== */
+
+        .date {
+            display: inline-block;
+
+            margin-top: 25px;
+
+            padding: 10px 24px;
+
+            background: white;
+
+            color: #398eb2;
+
+            border-radius: 50px;
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            box-shadow:
+                0 8px 20px
+                rgba(40, 127, 169, 0.15);
+
+            animation:
+                dateFloat
+                3s ease-in-out infinite;
+        }
+
+
+        /* ==========================================
+           CINNAMOROLL CHARACTERS
+        ========================================== */
+
+        .cinnamoroll {
+            position: absolute;
+
+            z-index: 10;
+
+            pointer-events: none;
+
+            user-select: none;
+        }
+
+        .cinnamoroll img {
+            width: 120%;
+            height: auto;
+
+            display: block;
+
+            filter:
+                drop-shadow(
+                    0 15px 10px
+                    rgba(40, 127, 169, 0.18)
+                );
+        }
+
+
+        /*
+            CINNAMOROLL #1
+            Top-left
+        */
+
+        .cinnamoroll-one {
+            width: 250px;
+
+            left: 8%;
+            top: 10%;
+
+            animation:
+                cinnamorollOne
+                4s ease-in-out infinite;
+        }
+
+
+        /*
+            CINNAMOROLL #2
+            Top-right
+        */
+
+        .cinnamoroll-two {
+            width: 270px;
+
+            right: 7%;
+            top: 13%;
+
+            animation:
+                cinnamorollTwo
+                5s ease-in-out infinite;
+        }
+
+
+        /*
+            CINNAMOROLL #3
+            Bottom-left
+        */
+
+        .cinnamoroll-three {
+            width: 250px;
+
+            left: 6%;
+            bottom: 5%;
+
+            animation:
+                cinnamorollThree
+                4.5s ease-in-out infinite;
+        }
+
+
+        /*
+            CINNAMOROLL #4
+            Bottom-right
+        */
+
+        .cinnamoroll-four {
+            width: 290px;
+
+            right: 7%;
+            bottom: 5%;
+
+            animation:
+                cinnamorollFour
+                5.5s ease-in-out infinite;
+        }
+
+
+        /* ==========================================
+           GENERAL SECTIONS
+        ========================================== */
+
+        .section {
+            padding: 90px 20px;
+
+            text-align: center;
+
+            background: #fffdf7;
+        }
+
+        .section.blue {
+            background: #eafaff;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 780px;
+
+            margin: auto;
+
+            padding: 40px;
+
+            background: white;
+
+            border-radius: 35px;
+
+            border: 5px solid white;
+
+            box-shadow:
+                0 20px 45px
+                rgba(50, 130, 165, 0.14);
+        }
+
+        .section-title {
+            color: #2d87ae;
+
+            font-size:
+                clamp(38px, 7vw, 62px);
+
+            margin-bottom: 15px;
+
+            line-height: 1;
+
+            text-shadow:
+                0 3px white;
+        }
+
+        .message {
+            font-size: 21px;
+
+            line-height: 1.5;
+
+            max-width: 650px;
+
+            margin: auto;
+        }
+
+
+        /* ==========================================
+           DETAILS
+        ========================================== */
+
+        .details {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 15px;
+
+            margin-top: 25px;
+        }
+
+        .detail {
+            padding: 18px;
+
+            background: #effbff;
+
+            border:
+                3px dashed #9bdcec;
+
+            border-radius: 24px;
+
+            font-size: 20px;
+
+            font-weight: bold;
+        }
+
+        .detail-label {
+            display: block;
+
+            color: #75b4c9;
+
+            font-size: 12px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 4px;
+        }
+
+
+        /* ==========================================
+           EXPECT
+        ========================================== */
+
+        .expect {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-top: 25px;
+        }
+
+        .expect-item {
+            padding: 20px 10px;
+
+            border-radius: 25px;
+
+            background: #f2fcff;
+
+            font-weight: bold;
+
+            animation:
+                littleBounce
+                3s ease-in-out infinite;
+        }
+
+        .expect-item:nth-child(2) {
+            animation-delay: .3s;
+        }
+
+        .expect-item:nth-child(3) {
+            animation-delay: .6s;
+        }
+
+        .expect-item:nth-child(4) {
+            animation-delay: .9s;
+        }
+
+        .expect-icon {
+            display: block;
+
+            font-size: 45px;
+
+            margin-bottom: 5px;
+        }
+
+
+        /* ==========================================
+           RSVP
+        ========================================== */
+
+        .rsvp {
+            margin-top: 25px;
+        }
+
+        .rsvp button {
+            border: none;
+
+            padding: 14px 25px;
+
+            margin: 7px;
+
+            border-radius: 50px;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+
+            box-shadow:
+                0 6px rgba(0,0,0,.12);
+        }
+
+        .rsvp button:hover {
+            transform: translateY(-4px);
+        }
+
+        .yes {
+            background: #8fe481;
+            color: #276c36;
+        }
+
+        .no {
+            background: #ffacd0;
+            color: #893a60;
+        }
+
+
+        /* ==========================================
+           LOCATION
+        ========================================== */
+
+        .map-box {
+            min-height: 180px;
+
+            margin-top: 25px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            background: #eafaff;
+
+            border:
+                3px dashed #9bdcec;
+
+            border-radius: 25px;
+
+            font-size: 15px;
+        }
+
+        .map-button,
+        .celebrate {
+            border: none;
+
+            padding: 14px 25px;
+
+            margin-top: 18px;
+
+            border-radius: 50px;
+
+            background: #58bfe9;
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 6px rgba(0,0,0,.12);
+
+            transition: 0.25s;
+        }
+
+        .map-button:hover,
+        .celebrate:hover {
+            transform: translateY(-4px);
+        }
+
+
+        /* ==========================================
+           FOOTER
+        ========================================== */
+
+        .footer {
+            min-height: 70vh;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 60px 20px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #bdeeff,
+                    #72d0f3
+                );
+        }
+
+        .footer-cloud {
+            font-size: 100px;
+
+            animation:
+                floating
+                2.5s ease-in-out infinite;
+        }
+
+        .footer-title {
+            color: white;
+
+            font-size:
+                clamp(50px, 10vw, 90px);
+
+            line-height: 1;
+
+            text-shadow:
+                0 6px #3e9dc6;
+        }
+
+        .footer-text {
+            color: white;
+
+            font-size: 22px;
+
+            margin-top: 15px;
+        }
+
+
+        /* ==========================================
+           CONFETTI
+        ========================================== */
+
+        .confetti {
+            position: fixed;
+
+            top: -30px;
+
+            z-index: 99999;
+
+            pointer-events: none;
+
+            animation:
+                confettiFall
+                3.5s linear forwards;
+        }
+
+
+        /* ==========================================
+           ANIMATIONS
+        ========================================== */
+
+        @keyframes loading {
+
+            from {
+                width: 0%;
+            }
+
+            to {
+                width: 100%;
+            }
+
+        }
+
+        @keyframes floating {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+
+        }
+
+        @keyframes pulse {
+
+            50% {
+                transform: scale(1.06);
+            }
+
+        }
+
+        @keyframes photoFloat {
+
+            0%,
+            100% {
+                transform:
+                    translateY(0)
+                    rotate(0deg);
+            }
+
+            50% {
+                transform:
+                    translateY(-9px)
+                    rotate(2deg);
+            }
+
+        }
+
+        @keyframes numberBounce {
+
+            0%,
+            100% {
+                transform:
+                    translateY(0)
+                    rotate(-6deg);
+            }
+
+            50% {
+                transform:
+                    translateY(-10px)
+                    rotate(5deg);
+            }
+
+        }
+
+        @keyframes dateFloat {
+
+            50% {
+                transform:
+                    translateY(-5px);
+            }
+
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: .25;
+                transform: scale(.65) rotate(25deg);
+            }
+
+        }
+
+        @keyframes moveCloudRight {
+
+            from {
+                transform:
+                    translateX(0);
+            }
+
+            to {
+                transform:
+                    translateX(
+                        calc(100vw + 300px)
+                    );
+            }
+
+        }
+
+        @keyframes moveCloudLeft {
+
+            from {
+                transform:
+                    translateX(0);
+            }
+
+            to {
+                transform:
+                    translateX(
+                        calc(-100vw - 300px)
+                    );
+            }
+
+        }
+
+
+        /* ==========================================
+           CINNAMOROLL ANIMATIONS
+        ========================================== */
+
+        @keyframes cinnamorollOne {
+
+            0%,
+            100% {
+                transform:
+                    translate(0,0)
+                    rotate(-4deg);
+            }
+
+            50% {
+                transform:
+                    translate(15px,-25px)
+                    rotate(5deg);
+            }
+
+        }
+
+        @keyframes cinnamorollTwo {
+
+            0%,
+            100% {
+                transform:
+                    translate(0,0)
+                    rotate(4deg);
+            }
+
+            50% {
+                transform:
+                    translate(-20px,-30px)
+                    rotate(-5deg);
+            }
+
+        }
+
+        @keyframes cinnamorollThree {
+
+            0%,
+            100% {
+                transform:
+                    translate(0,0)
+                    rotate(3deg);
+            }
+
+            50% {
+                transform:
+                    translate(20px,-20px)
+                    rotate(-4deg);
+            }
+
+        }
+
+        @keyframes cinnamorollFour {
+
+            0%,
+            100% {
+                transform:
+                    translate(0,0)
+                    rotate(-3deg);
+            }
+
+            50% {
+                transform:
+                    translate(-15px,-25px)
+                    rotate(4deg);
+            }
+
+        }
+
+        @keyframes littleBounce {
+
+            0%,
+            100% {
+                transform:
+                    translateY(0);
+            }
+
+            50% {
+                transform:
+                    translateY(-8px);
+            }
+
+        }
+
+        @keyframes confettiFall {
+
+            0% {
+                transform:
+                    translateY(0)
+                    translateX(0)
+                    rotate(0deg);
+
+                opacity: 1;
+            }
+
+            100% {
+                transform:
+                    translateY(110vh)
+                    translateX(var(--x))
+                    rotate(720deg);
+
+                opacity: 0;
+            }
+
+        }
+
+
+        /* ==========================================
+           TABLET
+        ========================================== */
+
+        @media(max-width: 800px) {
+
+            .cinnamoroll-one {
+                width: 130px;
+                left: -5px;
+            }
+
+            .cinnamoroll-two {
+                width: 135px;
+                right: -5px;
+            }
+
+            .cinnamoroll-three {
+                width: 145px;
+                left: -5px;
+            }
+
+            .cinnamoroll-four {
+                width: 145px;
+                right: -5px;
+            }
+
+            .richard-photo {
+                width: 150px;
+                height: 150px;
+            }
+
+            .number-five {
+                width: 75px;
+                height: 75px;
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+            .expect {
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+        }
+
+
+        /* ==========================================
+           MOBILE
+        ========================================== */
+
+        @media(max-width: 500px) {
+
+            .hero {
+                min-height: 100svh;
+
+                padding:
+                    45px 10px;
+            }
+
+            .cinnamoroll-one,
+            .cinnamoroll-two {
+                width: 90px;
+            }
+
+            .cinnamoroll-three,
+            .cinnamoroll-four {
+                width: 105px;
+            }
+
+            .richard-photo {
+                width: 125px;
+                height: 125px;
+            }
+
+            .richard-name {
+                font-size: 52px;
+            }
+
+            .birthday-age {
+                font-size: 58px;
+            }
+
+            .number-five {
+                width: 65px;
+                height: 65px;
+
+                border-width: 5px;
+            }
+
+            .date {
+                font-size: 16px;
+
+                padding:
+                    8px 15px;
+            }
+
+            .card {
+                padding:
+                    25px 18px;
+            }
+
+            .message {
+                font-size: 18px;
+            }
+
+            .section {
+                padding:
+                    65px 12px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         LOADING SCREEN
+    ========================================== -->
+
+    <div id="loadingScreen">
+
+        <div class="loading-content">
+
+            <div class="loading-cloud">
+                ☁️
+            </div>
+
+            <div class="loading-title">
+                A Little Birthday Surprise...
+            </div>
+
+            <div class="loading-text">
+                Loading birthday magic ✨
+            </div>
+
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==========================================
+         OPENING SCREEN
+    ========================================== -->
+
+    <div id="openingScreen">
+
+        <div
+            class="opening-content"
+            onclick="openInvitation()"
+        >
+
+            <div class="envelope">
+                💌
+            </div>
+
+            <div class="opening-title">
+                Tap to Open!
+            </div>
+
+            <div class="opening-subtitle">
+                A special birthday invitation
+                is waiting for you!
+            </div>
+
+            <div class="open-button">
+                ✨ OPEN INVITATION ✨
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==========================================
+         MAIN WEBSITE
+    ========================================== -->
+
+    <div id="website">
+
+
+        <!-- ======================================
+             HERO
+        ======================================= -->
+
+        <section class="hero">
+
+
+            <!-- MOVING CLOUDS -->
+
+            <div class="cloud cloud-one">
+                ☁️
+            </div>
+
+            <div class="cloud cloud-two">
+                ☁️
+            </div>
+
+            <div class="cloud cloud-three">
+                ☁️
+            </div>
+
+            <div class="cloud cloud-four">
+                ☁️
+            </div>
+
+
+            <!-- STARS -->
+
+            <div class="star star-one">
+                ✦
+            </div>
+
+            <div class="star star-two">
+                ✧
+            </div>
+
+            <div class="star star-three">
+                ✦
+            </div>
+
+            <div class="star star-four">
+                ♡
+            </div>
+
+            <div class="star star-five">
+                ✧
+            </div>
+
+
+            <!-- ==================================
+                 CINNAMOROLL #1
+            =================================== -->
+
+            <div class="cinnamoroll cinnamoroll-one">
+
+                <img
+                    src="cinnamoroll-1.png"
+                    alt="Cinnamoroll"
+                >
+
+            </div>
+
+
+            <!-- ==================================
+                 CINNAMOROLL #2
+            =================================== -->
+
+            <div class="cinnamoroll cinnamoroll-two">
+
+                <img
+                    src="cinnamoroll-2.png"
+                    alt="Cinnamoroll"
+                >
+
+            </div>
+
+
+            <!-- ==================================
+                 CINNAMOROLL #3
+            =================================== -->
+
+            <div class="cinnamoroll cinnamoroll-three">
+
+                <img
+                    src="cinnamoroll-3.png"
+                    alt="Cinnamoroll"
+                >
+
+            </div>
+
+
+            <!-- ==================================
+                 CINNAMOROLL #4
+            =================================== -->
+
+            <div class="cinnamoroll cinnamoroll-four">
+
+                <img
+                    src="cinnamoroll-4.png"
+                    alt="Cinnamoroll"
+                >
+
+            </div>
+
+
+            <!-- ==================================
+                 HERO CONTENT
+            =================================== -->
+
+            <div class="hero-content">
+
+
+                <!-- RICHARD PHOTO -->
+
+                <div class="richard-photo">
+
+                    <img
+                        src="Ruru.png"
+                        alt="Richard"
+                    >
+
+                </div>
+
+
+                <!-- RICHARD'S @5 -->
+
+                <div class="birthday-title">
+
+                    <div class="richard-name">
+                        Richard's
+                    </div>
+
+                    <div class="birthday-age">
+
+                        <span class="at-symbol">
+                            @
+                        </span>
+
+                        <span class="number-five">
+                            5
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DATE -->
+
+                <div class="date">
+
+                     August 27, 2026 | Thursday
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ======================================
+             INVITATION MESSAGE
+        ======================================= -->
+
+        <section class="section">
+
+            <div class="card">
+
+                <h2 class="section-title">
+                    You're Invited! 
+                </h2>
+
+                <p class="message">
+
+                    Come join us for a super cute
+                    and fun-filled celebration! 
+
+                    <br><br>
+
+                    Your smiles, laughter, and hugs
+                    will make Richard's 5th birthday
+                    extra magical! 
+
+                </p>
+
+
+                <div class="details">
+
+                    <div class="detail">
+
+                        <span class="detail-label">
+                            Birthday
+                        </span>
+
+                        August 27, 2026
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <span class="detail-label">
+                            Day
+                        </span>
+
+                        Thursday
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ======================================
+             WHAT TO EXPECT
+        ======================================= -->
+
+        <section class="section blue">
+
+            <div class="card">
+
+                <h2 class="section-title">
+                    What to Expect? 🎉
+                </h2>
+
+
+                <div class="expect">
+
+
+                    <div class="expect-item">
+
+                        <span class="expect-icon">
+                            🎁
+                        </span>
+
+                        Party Favors
+
+                    </div>
+
+
+                    <div class="expect-item">
+
+                        <span class="expect-icon">
+                            🧁
+                        </span>
+
+                        Yummy Food
+
+                    </div>
+
+
+                    <div class="expect-item">
+
+                        <span class="expect-icon">
+                            🎈
+                        </span>
+
+                        Simple Celebration
+
+                    </div>
+
+
+                    <div class="expect-item">
+
+                        <span class="expect-icon">
+                            📸
+                        </span>
+
+                        Happy Memories
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ======================================
+             RSVP
+        ======================================= -->
+
+        <section class="section">
+
+            <div class="card">
+
+                <h2 class="section-title">
+                    Will You Come? 
+                </h2>
+
+                <p class="message">
+                    We'd be so happy to celebrate
+                    with you! 
+                </p>
+
+
+                <div class="rsvp">
+
+                    <button
+                        class="yes"
+                        onclick="sayYes()"
+                    >
+                         Yes, I'll be there!
+                    </button>
+
+
+                    <button
+                        class="no"
+                        onclick="sayNo()"
+                    >
+                         Sorry, I can't make it
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ======================================
+             LOCATION
+        ======================================= -->
+
+        <section class="section blue">
+
+            <div class="card">
+
+                <h2 class="section-title">
+                     Location
+                </h2>
+
+
+                <div class="map-box">
+
+                    
+
+                    <br>
+
+                    <strong>
+                        San Diego Parochial School | Elementary Department
+                        <br>
+                        Our Lady of Immaculate Conception Room
+                    </strong>
+
+                    <br>
+
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ======================================
+             FOOTER
+        ======================================= -->
+
+        <footer class="footer">
+
+            <div>
+
+                <div class="footer-cloud">
+                    ☁️
+                </div>
+
+                <div class="footer-title">
+                    See you there! 
+                </div>
+
+                <div class="footer-text">
+                    Let's make Richard's 5th birthday
+                    one to remember! 
+                </div>
+
+
+                <button
+                    class="celebrate"
+                    onclick="makeConfetti()"
+                >
+                     Celebrate!
+                </button>
+
+            </div>
+
+        </footer>
+
+
+    </div>
+
+
+
+    <!-- ==========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <script>
+
+
+        /* =========================================
+           LOADING SCREEN
+        ========================================= */
+
+        window.addEventListener(
+            "load",
+            function() {
+
+                setTimeout(
+                    function() {
+
+                        document
+                            .getElementById(
+                                "loadingScreen"
+                            )
+                            .style.opacity = "0";
+
+
+                        setTimeout(
+                            function() {
+
+                                document
+                                    .getElementById(
+                                        "loadingScreen"
+                                    )
+                                    .style.display =
+                                    "none";
+
+                            },
+                            800
+                        );
+
+                    },
+                    2300
+                );
+
+            }
+        );
+
+
+
+        /* =========================================
+           OPEN INVITATION
+        ========================================= */
+
+        function openInvitation() {
+
+            const opening =
+                document.getElementById(
+                    "openingScreen"
+                );
+
+            const website =
+                document.getElementById(
+                    "website"
+                );
+
+
+            opening.classList.add(
+                "hide"
+            );
+
+
+            setTimeout(
+                function() {
+
+                    website.classList.add(
+                        "show"
+                    );
+
+                    makeConfetti();
+
+                },
+                700
+            );
+
+        }
+
+
+
+        /* =========================================
+           RSVP YES
+        ========================================= */
+
+        function sayYes() {
+
+            alert(
+                "Yay! Richard will be so happy to see you! "
+            );
+
+            makeConfetti();
+
+        }
+
+
+
+        /* =========================================
+           RSVP NO
+        ========================================= */
+
+        function sayNo() {
+
+            alert(
+                "Aww! We will miss you! "
+            );
+
+        }
+
+
+
+        /* =========================================
+           GOOGLE MAPS
+        ========================================= */
+
+        function openMap() {
+
+            window.open(
+                "https://maps.google.com",
+                "_blank"
+            );
+
+        }
+
+
+
+        /* =========================================
+           CONFETTI
+        ========================================= */
+
+        function makeConfetti() {
+
+            const shapes = [
+                "✦",
+                "♥",
+                "★",
+                "✧",
+                "●",
+                "🎈",
+                "💙"
+            ];
+
+
+            for (
+                let i = 0;
+                i < 60;
+                i++
+            ) {
+
+                const piece =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                piece.className =
+                    "confetti";
+
+
+                piece.innerHTML =
+                    shapes[
+                        Math.floor(
+                            Math.random() *
+                            shapes.length
+                        )
+                    ];
+
+
+                piece.style.left =
+                    Math.random() *
+                    100 +
+                    "vw";
+
+
+                piece.style.fontSize =
+                    10 +
+                    Math.random() *
+                    20 +
+                    "px";
+
+
+                const colors = [
+                    "#ffffff",
+                    "#ffabc9",
+                    "#ffe27d",
+                    "#69c9ef",
+                    "#4ba8d1"
+                ];
+
+
+                piece.style.color =
+                    colors[
+                        Math.floor(
+                            Math.random() *
+                            colors.length
+                        )
+                    ];
+
+
+                piece.style.setProperty(
+                    "--x",
+                    (
+                        Math.random() *
+                        300 -
+                        150
+                    ) +
+                    "px"
+                );
+
+
+                piece.style.animationDuration =
+                    2.5 +
+                    Math.random() *
+                    2.5 +
+                    "s";
+
+
+                document.body.appendChild(
+                    piece
+                );
+
+
+                setTimeout(
+                    function() {
+
+                        piece.remove();
+
+                    },
+                    5000
+                );
+
+            }
+
+        }
+
+
+    </script>
+
+</body>
+</html>
